@@ -1,17 +1,12 @@
 # PetShopDjango
-integrantes:
 Justo Cano
-Luis Gonzalez
-Kevin Arucutipa
+
 
 paso1: 
-Abre la terminal (ctrl+shift+ñ)
+seleciona "crear-proyecto-tienda-django.bat" y deja que se ejecute 
 paso2:
-pegar esto y dar enter:
-python -m pip install --upgrade pip
-pip install django
-pip install pillow
-pip install djangorestframework
-pip install transbank-sdk
-pip install django-extensions
+en tu disco c busaca la carpeta chile protector 
+y reemp¿laza La carpeta MapaCriminalidad por la que descargaste 
+paso3:
+en la terminal
 Escribir s.bat y dar enter
