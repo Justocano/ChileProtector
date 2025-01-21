@@ -1,0 +1,112 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+    {% block style %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'core/CSS/inicio.css' %}">
+    {% endblock style %}
+    {% block content %}
+    {% if regiones %} 
+    <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Regiones
+        </a>
+        
+        <ul class="dropdown-menu">
+            {% for region in regiones %}
+                <li><a class="dropdown-item" href="?region_id={{ region.id }}">{{ region.nombre }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+        <p class="error-message">{{ error_message1 }}</p>
+    {% endif %}
+    <!-- comunas -->
+    {% if comunas %}
+    <div>
+        <div class="container-fluid">
+            <div id="producto" class="centrado row">
+                {% for comuna in comunas %}
+                    <div class="<col-sm-12 col-md-6 col-lg-4 col-xl-3 ">
+                        <div class="card border-info mb-3" style="width: 18rem; margin:20px; background: #142B40; color: #fff !important;">
+                            <img src="{{ comuna.imagen }}" class="card-img-top" >
+                            <div class="card-body">
+                                <h4 class="card-title">{{ comuna.nombre }}   </h4>
+                                <p class="card-text truncate">Descripcion: {{ comuna.descripcion }}</p>
+                                {% if comuna.calificacion == "Segura" %}
+                                    <p class="text-success"><strong>{{ comuna.calificacion }}</strong></p>
+                                {% elif comuna.calificacion == "Poco Segura" %}
+                                    <p class="text-warning"><strong>{{ comuna.calificacion }}</strong></p>
+                                {% else %}
+                                    <p class="text-danger"><strong>{{ comuna.calificacion }}</strong></p>
+                                {% endif %}
+                                <a id="cbp" href="{% url 'ficha' comuna.id %}" class="btn btn-primary csc">Ver comuna</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                {% endfor %}
+            </div>
+            
+        </div>
+        
+    </div>
+    {% else %}
+    <p class="error-message">{{ error_message }}</p>
+    {% endif %}   
+    
+    
+    <!-- Botón para abrir el modal del mapa -->
+    <div class="fixed-bottom" style="right: 20px; bottom: 80px;">
+        <a id="mapButton" href="#" class="boton-redireccion" onclick="openMapModal()">
+            <i class="fas fa-map"></i>
+        </a>
+    </div>
+
+    <!-- Botón para abrir el modal de suscripción -->
+    <div class="fixed-bottom" style="right: 20px; bottom: 20px;">
+        <a id="subscriptionButton" href="#" class="boton-redireccion" onclick="openSubscriptionModal()">
+            <i class="fas fa-crown"></i>
+        </a>
+    </div>
+
+
+    <!-- Modal para el mapa -->
+    <div id="mapModal" class="modal map-modal">
+        <div class="modal-content fondo">
+            <span class="close" onclick="closeMapModal()">&times;</span>
+            <iframe src="https://www.google.com/maps/d/embed?mid=1S18Xr-aj7TDPoCXJZ9iRUbNgLHTZ5WU&ehbc=2E312F&noprof=1" width="700" height="500"></iframe>
+            <div class="leyenda mt-3">
+                <div class="leyenda-item">
+                    <div class="cuadrado seguro"></div>
+                    <span>Seguro</span>
+                </div>
+                <div class="leyenda-item">
+                    <div class="cuadrado poco-seguro"></div>
+                    <span>Poco seguro</span>
+                </div>
+                <div class="leyenda-item">
+                    <div class="cuadrado peligroso"></div>
+                    <span>Peligroso</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para la suscripción -->
+    <div id="subscriptionModal" class="modal subscription-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSubscriptionModal()">&times;</span>
+            <p>¿Quieres pagar la suscripción anual?</p>
+            <a href="{% url 'suscripcion' %}"><button class="btn btn-primary">Suscripción</button></a>
+        </div>
+    </div>
+
+
+    
+    {% endblock content %}
+    {% block script %}
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="{% static 'core/js/inicio.js' %}"></script>
+    {% endblock script%}
+</body>

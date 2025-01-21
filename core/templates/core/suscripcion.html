@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block content %}
+<div>
+    <div class="container mt-3" id="registro">
+        <section>
+            <h1 style="padding-left: 100px; color: white;">Crear Pago</h1>
+            <br>
+            <form method="post" enctype="multipart/form-data" class="row g-3 needs-validation" id="formulario4" action="{% url 'suscripcion' %}" novalidate="novalidate">
+                {% csrf_token %}
+                <div class="">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            {% for field in form %}
+                            <div class="mb-3 fw-bold stRegistro">
+                                <label for="{{ field.id_for_label }}" class="form-label leyenda-item">
+                                    <span>{{ field.label }}</span>
+                                </label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in field.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div id="stylebtn">
+                    <a href="{% url 'inicio' %}">Volver</a>
+                    <input class="btn btn-primary stylebtn1" type="submit" value="Crear Pago">
+                </div>
+            </form>
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button class="btn-close" data-bs-dismiss="alert" type="button" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </section>
+    </div>
+</div>
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}

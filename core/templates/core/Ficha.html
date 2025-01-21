@@ -1,0 +1,75 @@
+
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block content %}
+<br>
+<br>
+<br>
+  <div class="main-content">
+    <div class="container-fluid">
+      {% if regiones %}
+      <div class="row comuna-details">
+        {% if comuna %}
+          <div class="comuna-image">
+              <img 
+                  src="{{ comuna.imagen }}"
+                  alt="{{ comuna.nombre }}">
+          </div>
+
+          <div class="comuna-details">
+            <b class="titulo-producto">{{ comuna.nombre }}</b>
+            {% for region in regiones %}
+              {% if region.id == comuna.regionId %}
+                <p>Region: {{ region.nombre }}</p>
+              {% else %}
+              {% endif %}  
+            {% endfor %}
+            <p><br>Descripción:<br><br>{{ comuna.descripcion }}<br><br>
+            NIvel de Vigilancia: {{ comuna.vigilancia }} <br>
+            Tipo:</p>
+            {% if comuna.calificacion == "Segura" %}
+              <p class="text-success"><strong>{{ comuna.calificacion }}</strong></p>
+            {% elif comuna.calificacion == "Poco Segura" %}
+              <p class="text-warning"><strong>{{ comuna.calificacion }}</strong></p>
+            {% else %}
+              <p class="text-danger"><strong>{{ comuna.calificacion }}</strong></p>
+            {% endif %}
+          </div>
+          
+        {% else %}
+        <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+        
+      </div>
+      {% else %}
+        <p class="error-message1">{{ error_message1 }}</p>
+      {% endif %}
+    </div>
+  </div>
+  <br>
+  <h1 class="color-wh">Noticias de Crímenes en {{ comuna.nombre}}</h1>
+
+  {% if articles %}
+      <div id="container-fluid" class="">
+          <div id="producto" class="centrado row">
+              {% for article in articles %}
+                  <div class="<col-sm-12 col-md-6 col-lg-4 col-xl-3 ">
+                      <div class="card border-info mb-3" style="width: 18rem; margin:20px; background: #142B40; color: #fff !important;">
+                          <img src="{{ article.urlToImage }}" class="card-img-top" >
+                          <div class="card-body">
+                              <h4 class="card-title">{{ article.title }}   </h4>
+                              <p class="card-text truncate">Descripcion: {{ article.description  }}</p>
+                              
+                              <a href="{{ article.url }}" target="_blank" class="btn btn-primary csc">Leer más</a>
+                          </div>
+                      </div>
+                  </div>
+                  
+              {% endfor %}
+          </div>
+      </div>
+  {% else %}
+      <p>No se encontraron noticias.</p>
+  {% endif %}
+{% endblock content %}
