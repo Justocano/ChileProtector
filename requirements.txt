@@ -13,4 +13,4 @@ sqlparse==0.4.4
 transbank-sdk==4.0.0
 tzdata==2023.3
 urllib3==2.0.2
-gunicorn
+gunicorn==20.1.0
